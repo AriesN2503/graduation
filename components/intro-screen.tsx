@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, GraduationCap } from "lucide-react";
 
+import Invitation from "@/components/invitation/invitation";
 import { TextEffect } from "@/components/motion-primitives/text-effect";
 import { AnimatedGroup } from "@/components/motion-primitives/animated-group";
 import { Button } from "@/components/ui/button";
@@ -33,8 +34,10 @@ export default function IntroScreen({
     };
 
     return (
-        <AnimatePresence>
-            {!isDismissed && (
+        <AnimatePresence mode="wait">
+            {isDismissed ? (
+                <Invitation key="graduation-invitation" />
+            ) : (
                 <motion.div
                     key="graduation-intro"
                     initial={{ opacity: 1 }}
