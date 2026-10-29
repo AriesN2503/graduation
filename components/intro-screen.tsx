@@ -70,7 +70,7 @@ export default function IntroScreen({
                         >
                             <span className="h-px flex-1 bg-[#d9c9b8]" />
 
-                            <div className="flex items-center gap-2 text-[#a94824]">
+                            <div className="flex items-center gap-2 text-poster-accent">
                                 <GraduationCap
                                     aria-hidden="true"
                                     className="size-4 stroke-[1.5]"
@@ -100,8 +100,7 @@ export default function IntroScreen({
                                     </p>
 
                                     <h1
-                                        className="text-[clamp(1.7rem,5vw,3.8rem)] font-normal leading-tight tracking-[0.04em] text-[#34302c]"
-                                        style={{ fontFamily: "var(--font-poster-serif), Georgia, serif" }}
+                                        className="font-display text-[clamp(1.7rem,5vw,3.8rem)] font-normal leading-tight tracking-[0.16em] text-[#34302c]"
                                     >
                                         <TextEffect
                                             per="word"
@@ -117,7 +116,8 @@ export default function IntroScreen({
                                             per="word"
                                             preset="blur"
                                             delay={0.4}
-                                            className="font-serif text-[clamp(2.9rem,8vw,6.6rem)] italic leading-[1.05] tracking-[-0.055em] text-[#c6532d]"
+                                            className="font-script text-[clamp(3.5rem,10vw,8rem)] leading-[0.95]"
+                                            style={{ color: "var(--poster-accent)" }}
                                         >
                                             Thân Mời Bạn
                                         </TextEffect>
@@ -136,13 +136,13 @@ export default function IntroScreen({
                                         className="my-7 flex w-full max-w-xs items-center gap-4 sm:my-9"
                                     >
                                         <span className="h-px flex-1 bg-[#d9c9b8]" />
-                                        <span className="size-1.5 rotate-45 border border-[#c6532d]" />
+                                        <span className="size-1.5 rotate-45 border border-poster-accent" />
                                         <span className="h-px flex-1 bg-[#d9c9b8]" />
                                     </motion.div>
 
                                     <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#6e655c] sm:text-[10px] sm:tracking-[0.4em]">
                                         Niên khóa 2022{" "}
-                                        <span className="px-1 text-[#c6532d]">—</span>
+                                        <span className="px-1 text-poster-accent">—</span>
                                         2026
                                     </p>
                                 </AnimatedGroup>
@@ -166,7 +166,7 @@ export default function IntroScreen({
                                     onClick={handleStart}
                                     variant="outline"
                                     size="lg"
-                                    className="h-11 rounded-none border-[#c6532d] bg-transparent px-6 text-[10px] font-medium uppercase tracking-[0.18em] text-[#a94824] shadow-none hover:bg-[#c6532d] hover:text-white focus-visible:ring-[#c6532d]/40"
+                                    className="h-11 rounded-none cursor-pointer border-poster-accent bg-transparent px-6 text-[10px] font-medium uppercase tracking-[0.18em] text-poster-accent shadow-none hover:bg-poster-accent hover:text-white focus-visible:ring-poster-accent/40"
                                 >
                                     Mở thiệp mời
 

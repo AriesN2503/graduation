@@ -69,7 +69,10 @@ export default function InvitationBook() {
                     title="Cùng chung vui"
                     pageNumber={1}
                 >
-                    <p className="mb-4 font-serif text-xl italic text-[#34302c]">
+                    <p
+                        className="font-script mb-4 text-4xl"
+                        style={{ color: "var(--poster-accent)" }}
+                    >
                         Lễ tốt nghiệp · Niên khóa 2022 — 2026
                     </p>
                     <p>
