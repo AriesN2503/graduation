@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 
 import InvitationPage from "@/components/invitation/components/invitation-page";
 import PosterCover from "@/components/invitation/components/poster-cover";
+import Image from "next/image";
 
 const HTMLFlipBook = dynamic(() => import("react-pageflip"), {
     ssr: false,
@@ -164,8 +165,8 @@ export default function InvitationBook({ onReady }: InvitationBookProps) {
         orientation === "landscape" && currentPage === 0
             ? "left-3/4"
             : orientation === "landscape" && currentPage === 3
-              ? "left-1/4"
-              : "left-1/2";
+                ? "left-1/4"
+                : "left-1/2";
 
     return (
         <motion.div
@@ -226,27 +227,110 @@ export default function InvitationBook({ onReady }: InvitationBookProps) {
             >
                 <PosterCover onImageSettled={() => setIsPosterLoaded(true)} />
                 <InvitationPage
-                    eyebrow="Trân trọng kính mời"
+                    eyebrow="Thân mời bạn"
                     title="Cùng chung vui"
                     pageNumber={1}
                 >
                     <p
-                        className="font-script mb-4 text-4xl"
+                        className="font-script mb-2 text-base sm:text-2xl 2xl:text-[clamp(2rem,4.5cqh,2.75rem)]"
                         style={{ color: "var(--poster-accent)" }}
                     >
                         Lễ tốt nghiệp · Niên khóa 2022 — 2026
                     </p>
-                    <p>
-                        Đến tham dự buổi lễ tốt nghiệp và chia sẻ niềm vui
-                        trong ngày đặc biệt này.
-                    </p>
+                    <div className="text-center space-y-4">
+                        <p>
+                            Vậy là hành trình 4 năm đại học cũng đã đi đến một cột mốc thật đặc biệt. Bốn năm qua là những tháng ngày với thật nhiều kỷ niệm, trải nghiệm và cả những nỗ lực đáng nhớ. Tất cả đã góp phần tạo nên mình của ngày hôm nay.
+                        </p>
+
+                        <p>
+                            Trong khoảnh khắc ý nghĩa này, mình mong có thể chia sẻ niềm vui cùng những người bạn, người thân đã luôn đồng hành và ủng hộ mình. Vì vậy, mình thân mời bạn đến tham dự buổi lễ tốt nghiệp và cùng lưu giữ thêm một kỷ niệm đẹp nhé!
+                        </p>
+                    </div>
+
+                    {/* Graduation photo */}
+                    <div className="mt-3 overflow-hidden rounded-lg sm:mt-4">
+                        <Image
+                            src="/images/dai-hoc-fpt-tp-hcm-1.jpeg"
+                            alt="A memorable graduation moment"
+                            width={1200}
+                            height={675}
+                            className="aspect-video max-h-28 w-full object-cover sm:max-h-32 2xl:max-h-[clamp(140px,24cqh,190px)]"
+                            priority={false}
+                        />
+                    </div>
                 </InvitationPage>
                 <InvitationPage
                     eyebrow="Thông tin buổi lễ"
                     title="Hẹn gặp bạn"
                     pageNumber={2}
                 >
-                    <p>Thời gian và địa điểm sẽ được cập nhật.</p>
+                    <div className="space-y-3">
+                        <div>
+                            <p className="text-[8px] uppercase tracking-[0.16em] opacity-60 2xl:text-[11px]">
+                                Thời gian
+                            </p>
+                            <p className="text-[9px] sm:text-[13px] 2xl:text-[15px]">
+                                [07/11/2026] · [12h45-15h]
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className="text-[8px] uppercase tracking-[0.16em] opacity-60 2xl:text-[11px]">
+                                Địa điểm
+                            </p>
+                            <p className="text-[11px] text-poster-accent sm:text-[13px] 2xl:text-[15px]">
+                                FPT University
+                            </p>
+                            <p>
+                                [Đường D1, khu Công Nghệ Cao, phường Tăng Nhơn Phú, TP Hồ Chí Minh]
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className="text-[8px] uppercase tracking-[0.16em] opacity-60 2xl:text-[11px]">
+                                Liên hệ
+                            </p>
+                            <p>
+                                Trường Huy
+                            </p>
+                            <p>
+                                Số điện thoại:{" "}
+                                <a
+                                    href="tel:0346349968"
+                                    className="underline underline-offset-4 hover:text-poster-accent transition-opacity"
+                                >
+                                    0346 349 968
+                                </a>
+                            </p>
+                        </div>
+
+                        <div className="space-y-2 pt-1">
+                            <p className="text-[8px] uppercase tracking-[0.16em] opacity-60 2xl:text-[11px]">
+                                Bản đồ địa điểm
+                            </p>
+
+                            <div className="overflow-hidden rounded-xl border border-black/10">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3918.610010397031!2d106.8073081!3d10.8411276!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752731176b07b1%3A0xb752b24b379bae5e!2sFPT%20University%20HCMC!5e0!3m2!1sen!2s!4v1793361568760!5m2!1sen!2s"
+                                    className="h-24 w-full sm:h-28 2xl:h-[clamp(140px,28cqh,220px)]"
+                                    style={{ border: 0 }}
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="strict-origin-when-cross-origin"
+                                    title="Bản đồ Trường Đại học FPT TP.HCM"
+                                />
+                            </div>
+
+                            <a
+                                href="https://www.google.com/maps/search/?api=1&query=FPT+University+HCMC"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[9px] sm:text-[11px] underline underline-offset-4 hover:text-poster-accent"
+                            >
+                                Xem đường đi trên Google Maps ↗
+                            </a>
+                        </div>
+                    </div>
                 </InvitationPage>
                 <InvitationPage
                     eyebrow="Cảm ơn bạn"
@@ -254,7 +338,18 @@ export default function InvitationBook({ onReady }: InvitationBookProps) {
                     pageNumber={3}
                     cover
                 >
-                    <p>Sự hiện diện của bạn là niềm vui của chúng mình.</p>
+                    <p className="font-script mb-3 text-2xl sm:mb-5 sm:text-3xl 2xl:text-[clamp(2rem,4.5cqh,2.75rem)]"
+                        style={{ color: "var(--poster-accent)" }}>
+                        Until We Meet Again
+                    </p>
+                    <p>
+                        Sự hiện diện của bạn sẽ khiến ngày đặc biệt
+                        này trở nên trọn vẹn và ý nghĩa hơn.
+                    </p>
+
+                    <p className="mt-4 font-script text-lg sm:mt-6 sm:text-xl">
+                        See you there!
+                    </p>
                 </InvitationPage>
             </HTMLFlipBook>
             {currentPage < 3 && (

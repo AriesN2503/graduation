@@ -13,6 +13,7 @@ interface IntroScreenProps {
 }
 
 const VIDEO_READY_TIMEOUT_MS = 2500;
+const VIDEO_FADE_DURATION_SECONDS = 2;
 
 type ExperienceStage = "opening" | "starting" | "intro" | "transitioning" | "invitation";
 
@@ -24,6 +25,7 @@ export default function IntroScreen({
     const [isInvitationImageLoaded, setIsInvitationImageLoaded] = useState(false);
     const [hasInvitationImageError, setHasInvitationImageError] = useState(false);
     const [activePhraseIndex, setActivePhraseIndex] = useState(-1);
+    const [isVideoFadingIn, setIsVideoFadingIn] = useState(false);
     const [isVideoReady, setIsVideoReady] = useState(false);
     const [hasVideoError, setHasVideoError] = useState(false);
     const [hasAudioError, setHasAudioError] = useState(false);
@@ -51,6 +53,7 @@ export default function IntroScreen({
         }
 
         introCompletedRef.current = true;
+        setIsVideoFadingIn(true);
         setActivePhraseIndex(-1);
         activePhraseIndexRef.current = -1;
         setStage("transitioning");
@@ -91,6 +94,13 @@ export default function IntroScreen({
                 audio.currentTime
             );
             const playbackTime = introHighWaterRef.current;
+
+            if (
+                playbackTime >=
+                INTRO_TIMELINE.totalDuration - VIDEO_FADE_DURATION_SECONDS
+            ) {
+                setIsVideoFadingIn(true);
+            }
 
             if (playbackTime >= INTRO_TIMELINE.totalDuration) {
                 beginVideoTransition();
@@ -239,7 +249,11 @@ export default function IntroScreen({
             <div className="absolute inset-0 bg-linear-to-br from-[#4b3b31] via-[#211b17] to-[#171310]" />
             <video
                 ref={videoRef}
-                autoPlay={stage === "transitioning" || stage === "invitation"}
+                autoPlay={
+                    isVideoFadingIn ||
+                    stage === "transitioning" ||
+                    stage === "invitation"
+                }
                 muted
                 loop
                 playsInline
@@ -267,8 +281,10 @@ export default function IntroScreen({
                     }
                 }}
                 aria-hidden="true"
-                className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${
-                    stage === "invitation" && isVideoReady && !hasVideoError
+                className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-4000 ease-in-out ${
+                    (isVideoFadingIn || stage === "invitation") &&
+                    isVideoReady &&
+                    !hasVideoError
                         ? "opacity-100"
                         : "opacity-0"
                 }`}
@@ -315,6 +331,7 @@ export default function IntroScreen({
                         phrase={stage === "intro" ? activePhrase : undefined}
                         phraseIndex={activePhraseIndex}
                         sparkRevealDelay={sparkRevealDelay}
+                        isVideoFadingIn={isVideoFadingIn}
                         shouldReduceMotion={shouldReduceMotion}
                     />
                 )}

@@ -170,7 +170,7 @@
   }
 
   .invitation-flipbook.stf__parent {
-    touch-action: none;
+    touch-action: pan-y;
   }
 
   .invitation-flipbook .stf__item {
