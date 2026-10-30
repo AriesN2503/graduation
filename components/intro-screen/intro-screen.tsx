@@ -99,7 +99,8 @@ export default function IntroScreen({
 
             const nextPhraseIndex = INTRO_TIMELINE.phrases.findIndex(
                 ({ start, duration }) =>
-                    playbackTime >= start && playbackTime < start + duration
+                    playbackTime >= start + INTRO_TIMELINE.phraseStartOffset &&
+                    playbackTime < start + INTRO_TIMELINE.phraseStartOffset + duration
             );
             if (nextPhraseIndex !== activePhraseIndexRef.current) {
                 activePhraseIndexRef.current = nextPhraseIndex;

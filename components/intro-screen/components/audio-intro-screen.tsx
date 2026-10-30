@@ -94,7 +94,7 @@ export default function AudioIntroScreen({
                                             key={part.id}
                                             className={`intro-graduation__word intro-graduation__word--${part.id} ${
                                                 part.id === "graduation"
-                                                    ? "absolute bottom-[34%] right-[10%] z-10 font-script text-[clamp(4.8rem,17vw,12rem)] leading-none normal-case text-poster-accent sm:bottom-[20%] sm:right-[-2%]"
+                                                    ? "absolute bottom-[34%] right-[10%] z-10 font-script text-[clamp(4.8rem,17vw,12rem)] leading-none normal-case text-poster-accent sm:bottom-[20%] sm:right-[-1%]"
                                                     : "absolute left-[13%] top-[22%] z-10 font-display text-[clamp(2.5rem,7vw,4.5rem)] font-medium leading-none"
                                             }`}
                                             initial={{

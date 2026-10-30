@@ -1,5 +1,6 @@
 export const INTRO_TIMELINE = {
     totalDuration: 10,
+    phraseStartOffset: 0.1,
     transitionDuration: 0.5,
     sparkDelayAfterGraduation: 0.4,
     phrases: [

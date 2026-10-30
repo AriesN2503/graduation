@@ -16,9 +16,21 @@ interface InvitationBookProps {
     onReady: () => void;
 }
 
+interface FlipBookController {
+    flipNext: () => void;
+    flipPrev: () => void;
+}
+
+interface FlipBookHandle {
+    pageFlip: () => FlipBookController | null;
+}
+
 export default function InvitationBook({ onReady }: InvitationBookProps) {
     const currentPageRef = useRef(0);
     const isReadyReportedRef = useRef(false);
+    const flipBookRef = useRef<FlipBookHandle | null>(null);
+    const bookContainerRef = useRef<HTMLDivElement>(null);
+    const touchStartRef = useRef<{ x: number; y: number; side: "left" | "right" } | null>(null);
     const [currentPage, setCurrentPage] = useState(0);
     const [isFlipBookReady, setIsFlipBookReady] = useState(false);
     const [isPosterLoaded, setIsPosterLoaded] = useState(false);
@@ -43,6 +55,104 @@ export default function InvitationBook({ onReady }: InvitationBookProps) {
         }
     }, [isFlipBookReady, isPosterLoaded, onReady]);
 
+    useEffect(() => {
+        const container = bookContainerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const mobileQuery = window.matchMedia("(max-width: 640px)");
+        const isFlipBookTouch = (target: EventTarget | null): target is Element =>
+            target instanceof Element && target.closest(".invitation-flipbook") !== null;
+
+        const handleTouchStart = (event: TouchEvent) => {
+            const target = event.target;
+            if (!mobileQuery.matches || !isFlipBookTouch(target)) {
+                return;
+            }
+
+            const touch = event.changedTouches[0];
+            const rect = target.closest(".invitation-flipbook")?.getBoundingClientRect();
+            if (!touch || !rect) {
+                return;
+            }
+
+            touchStartRef.current = {
+                x: touch.clientX,
+                y: touch.clientY,
+                side: touch.clientX >= rect.left + rect.width / 2 ? "right" : "left",
+            };
+            event.stopPropagation();
+        };
+
+        const handleTouchMove = (event: TouchEvent) => {
+            if (!mobileQuery.matches || !touchStartRef.current) {
+                return;
+            }
+
+            const touch = event.changedTouches[0];
+            if (!touch) {
+                return;
+            }
+
+            event.stopPropagation();
+            if (Math.abs(touch.clientX - touchStartRef.current.x) > 8) {
+                if (event.cancelable) {
+                    event.preventDefault();
+                }
+            }
+        };
+
+        const handleTouchEnd = (event: TouchEvent) => {
+            if (!mobileQuery.matches || !touchStartRef.current) {
+                return;
+            }
+
+            event.stopPropagation();
+            const touch = event.changedTouches[0];
+            const start = touchStartRef.current;
+            touchStartRef.current = null;
+            if (!touch) {
+                return;
+            }
+
+            const deltaX = touch.clientX - start.x;
+            const deltaY = touch.clientY - start.y;
+            if (Math.abs(deltaX) < 24 || Math.abs(deltaX) < Math.abs(deltaY)) {
+                return;
+            }
+
+            const pageFlip = flipBookRef.current?.pageFlip();
+            if (start.side === "right" && deltaX < 0) {
+                pageFlip?.flipNext();
+            } else if (start.side === "left" && deltaX > 0) {
+                pageFlip?.flipPrev();
+            }
+        };
+
+        const handleTouchCancel = (event: TouchEvent) => {
+            if (touchStartRef.current) {
+                touchStartRef.current = null;
+                event.stopPropagation();
+            }
+        };
+
+        container.addEventListener("touchstart", handleTouchStart, true);
+        container.addEventListener("touchmove", handleTouchMove, {
+            capture: true,
+            passive: false,
+        });
+        container.addEventListener("touchend", handleTouchEnd, true);
+        container.addEventListener("touchcancel", handleTouchCancel, true);
+
+        return () => {
+            container.removeEventListener("touchstart", handleTouchStart, true);
+            container.removeEventListener("touchmove", handleTouchMove, true);
+            container.removeEventListener("touchend", handleTouchEnd, true);
+            container.removeEventListener("touchcancel", handleTouchCancel, true);
+        };
+    }, []);
+
     const isSinglePageCover = currentPage === 0 || currentPage === 3;
     const coverOffset =
         orientation === "landscape" && isSinglePageCover
@@ -59,12 +169,14 @@ export default function InvitationBook({ onReady }: InvitationBookProps) {
 
     return (
         <motion.div
+            ref={bookContainerRef}
             className="relative h-full w-full"
             initial={false}
             animate={{ x: coverOffset }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
             <HTMLFlipBook
+                ref={flipBookRef}
                 key="graduation-poster-cover"
                 width={640}
                 height={800}
@@ -83,7 +195,7 @@ export default function InvitationBook({ onReady }: InvitationBookProps) {
                 mobileScrollSupport={false}
                 clickEventForward={false}
                 useMouseEvents
-                swipeDistance={30}
+                swipeDistance={12}
                 showPageCorners
                 disableFlipByClick={false}
                 className="invitation-flipbook relative z-10 drop-shadow-[0_24px_40px_rgba(54,37,24,0.22)]"
