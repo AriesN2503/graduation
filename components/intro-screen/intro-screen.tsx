@@ -21,7 +21,6 @@ export default function IntroScreen({
     onContinue,
 }: IntroScreenProps) {
     const [stage, setStage] = useState<ExperienceStage>("opening");
-    const [introReady, setIntroReady] = useState(false);
     const [isInvitationImageLoaded, setIsInvitationImageLoaded] = useState(false);
     const [hasInvitationImageError, setHasInvitationImageError] = useState(false);
     const [activePhraseIndex, setActivePhraseIndex] = useState(-1);
@@ -38,14 +37,6 @@ export default function IntroScreen({
     const introHighWaterRef = useRef(0);
     const activePhraseIndexRef = useRef(-1);
     const shouldReduceMotion = useReducedMotion() ?? false;
-
-    useEffect(() => {
-        const timer = window.setTimeout(() => {
-            setIntroReady(true);
-        }, 300);
-
-        return () => window.clearTimeout(timer);
-    }, []);
 
     const beginVideoTransition = useCallback(() => {
         if (introCompletedRef.current) {
@@ -177,30 +168,36 @@ export default function IntroScreen({
     useEffect(() => {
         let isActive = true;
         const image = new window.Image();
+        const handleLoad = () => {
+            if (!isActive) {
+                return;
+            }
+
+            if (image.naturalWidth === 0) {
+                setHasInvitationImageError(true);
+                return;
+            }
+
+            setIsInvitationImageLoaded(true);
+        };
+        const handleError = () => {
+            if (isActive) {
+                setHasInvitationImageError(true);
+            }
+        };
+
+        image.addEventListener("load", handleLoad);
+        image.addEventListener("error", handleError);
         image.src = "/images/invitation.svg";
 
-        image.decode().then(
-            () => {
-                if (!isActive) {
-                    return;
-                }
-
-                if (image.naturalWidth === 0) {
-                    setHasInvitationImageError(true);
-                    return;
-                }
-
-                setIsInvitationImageLoaded(true);
-            },
-            () => {
-                if (isActive) {
-                    setHasInvitationImageError(true);
-                }
-            }
-        );
+        if (image.complete) {
+            handleLoad();
+        }
 
         return () => {
             isActive = false;
+            image.removeEventListener("load", handleLoad);
+            image.removeEventListener("error", handleError);
         };
     }, []);
 
@@ -320,7 +317,6 @@ export default function IntroScreen({
                 ) : stage === "opening" ? (
                     <OpeningScreen
                         key="graduation-intro"
-                        introReady={introReady}
                         isInvitationImageLoaded={isInvitationImageLoaded}
                         hasInvitationImageError={hasInvitationImageError}
                         onStart={handleStart}
