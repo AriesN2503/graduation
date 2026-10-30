@@ -342,7 +342,7 @@ export default function InvitationBook({ onReady }: InvitationBookProps) {
                         style={{ color: "var(--poster-accent)" }}>
                         Until We Meet Again
                     </p>
-                    <p>
+                    <p className="mx-10 sm:mx-0">
                         Sự hiện diện của bạn sẽ khiến ngày đặc biệt
                         này trở nên trọn vẹn và ý nghĩa hơn.
                     </p>
