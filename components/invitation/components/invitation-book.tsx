@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -12,9 +12,16 @@ const HTMLFlipBook = dynamic(() => import("react-pageflip"), {
     ssr: false,
 });
 
-export default function InvitationBook() {
+interface InvitationBookProps {
+    onReady: () => void;
+}
+
+export default function InvitationBook({ onReady }: InvitationBookProps) {
     const currentPageRef = useRef(0);
+    const isReadyReportedRef = useRef(false);
     const [currentPage, setCurrentPage] = useState(0);
+    const [isFlipBookReady, setIsFlipBookReady] = useState(false);
+    const [isPosterLoaded, setIsPosterLoaded] = useState(false);
     const [orientation, setOrientation] = useState<"portrait" | "landscape">(() => {
         if (typeof window === "undefined") {
             return "landscape";
@@ -29,6 +36,13 @@ export default function InvitationBook() {
 
         return bookWidth < 560 ? "portrait" : "landscape";
     });
+    useEffect(() => {
+        if (isFlipBookReady && isPosterLoaded && !isReadyReportedRef.current) {
+            isReadyReportedRef.current = true;
+            onReady();
+        }
+    }, [isFlipBookReady, isPosterLoaded, onReady]);
+
     const isSinglePageCover = currentPage === 0 || currentPage === 3;
     const coverOffset =
         orientation === "landscape" && isSinglePageCover
@@ -86,6 +100,7 @@ export default function InvitationBook() {
                             ? "portrait"
                             : "landscape",
                     );
+                    setIsFlipBookReady(true);
                 }}
                 onChangeState={(event) =>
                     event.data === "read" &&
@@ -97,7 +112,7 @@ export default function InvitationBook() {
                     )
                 }
             >
-                <PosterCover />
+                <PosterCover onImageSettled={() => setIsPosterLoaded(true)} />
                 <InvitationPage
                     eyebrow="Trân trọng kính mời"
                     title="Cùng chung vui"

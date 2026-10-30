@@ -1,22 +1,10 @@
 "use client";
 
-import IntroScreen from "@/components/intro-screen";
+import IntroScreen from "@/components/intro-screen/intro-screen";
 
 export default function BackgroundVideo() {
   return (
-    <div className="fixed inset-0 isolate overflow-hidden">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        poster="/images/IMG_0690.jpg"
-        className="absolute inset-0 h-full w-full object-cover object-center"
-      >
-        <source src="/vid/bg.mp4" type="video/mp4" />
-      </video>
-
+    <div className="fixed inset-0 isolate overflow-hidden bg-[#211b17]">
       <IntroScreen />
     </div>
   );
