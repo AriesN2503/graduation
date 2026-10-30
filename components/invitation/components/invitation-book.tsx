@@ -12,7 +12,11 @@ const HTMLFlipBook = dynamic(() => import("react-pageflip"), {
     ssr: false,
 });
 
-export default function InvitationBook() {
+interface InvitationBookProps {
+    onReady: () => void;
+}
+
+export default function InvitationBook({ onReady }: InvitationBookProps) {
     const currentPageRef = useRef(0);
     const [currentPage, setCurrentPage] = useState(0);
     const [orientation, setOrientation] = useState<"portrait" | "landscape">(() => {
@@ -86,6 +90,7 @@ export default function InvitationBook() {
                             ? "portrait"
                             : "landscape",
                     );
+                    onReady();
                 }}
                 onChangeState={(event) =>
                     event.data === "read" &&

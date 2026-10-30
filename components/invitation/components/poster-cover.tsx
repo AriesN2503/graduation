@@ -16,6 +16,7 @@ const PosterCover = forwardRef<HTMLDivElement>(function PosterCover(_, ref) {
                     src="/images/invitation.svg"
                     alt=""
                     fill
+                    unoptimized
                     priority
                     fetchPriority="high"
                     sizes="(max-width: 640px) 84vw, 620px"

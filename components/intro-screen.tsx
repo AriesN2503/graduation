@@ -19,6 +19,8 @@ export default function IntroScreen({
 }: IntroScreenProps) {
     const [introReady, setIntroReady] = useState(false);
     const [isDismissed, setIsDismissed] = useState(false);
+    const [isInvitationImageLoaded, setIsInvitationImageLoaded] = useState(false);
+    const [hasInvitationImageError, setHasInvitationImageError] = useState(false);
 
     useEffect(() => {
         const timer = window.setTimeout(() => {
@@ -28,7 +30,41 @@ export default function IntroScreen({
         return () => window.clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        let isActive = true;
+        const image = new window.Image();
+        image.src = "/images/invitation.svg";
+
+        image.decode().then(
+            () => {
+                if (!isActive) {
+                    return;
+                }
+
+                if (image.naturalWidth === 0) {
+                    setHasInvitationImageError(true);
+                    return;
+                }
+
+                setIsInvitationImageLoaded(true);
+            },
+            () => {
+                if (isActive) {
+                    setHasInvitationImageError(true);
+                }
+            }
+        );
+
+        return () => {
+            isActive = false;
+        };
+    }, []);
+
     const handleStart = () => {
+        if (!isInvitationImageLoaded) {
+            return;
+        }
+
         setIsDismissed(true);
         onContinue?.();
     };
@@ -163,10 +199,11 @@ export default function IntroScreen({
                             >
                                 <Button
                                     type="button"
+                                    disabled={!isInvitationImageLoaded}
                                     onClick={handleStart}
                                     variant="outline"
                                     size="lg"
-                                    className="h-11 rounded-none cursor-pointer border-poster-accent bg-transparent px-6 text-[10px] font-medium uppercase tracking-[0.18em] text-poster-accent shadow-none hover:bg-poster-accent hover:text-white focus-visible:ring-poster-accent/40"
+                                    className="h-11 rounded-none cursor-pointer border-poster-accent bg-transparent px-6 text-[10px] font-medium uppercase tracking-[0.18em] text-poster-accent shadow-none hover:bg-poster-accent hover:text-white focus-visible:ring-poster-accent/40 disabled:cursor-not-allowed"
                                 >
                                     Mở thiệp mời
 
@@ -176,8 +213,15 @@ export default function IntroScreen({
                                     />
                                 </Button>
 
-                                <p className="text-[9px] uppercase tracking-[0.22em] text-[#95897c]">
-                                    Trân trọng kính mời
+                                <p
+                                    role={hasInvitationImageError ? "alert" : "status"}
+                                    className="text-[9px] uppercase tracking-[0.12em] text-[#95897c]"
+                                >
+                                    {hasInvitationImageError
+                                        ? "Không tải được thiệp mời. Vui lòng tải lại trang để thử lại."
+                                        : !isInvitationImageLoaded
+                                          ? "Đang tải hình thiệp mời..."
+                                          : "Trân trọng kính mời"}
                                 </p>
                             </motion.div>
                         </main>
