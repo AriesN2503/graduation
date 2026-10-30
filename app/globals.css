@@ -144,18 +144,9 @@
   background-color: #f8f1e8 !important;
 }
 
-.invitation-page--poster {
-  border: 0;
-  background-color: #f8f1e8 !important;
-}
-
-.font-script {
-  color: var(--poster-accent) !important;
-}
-
 .invitation-book-container {
-  width: min(96vw, 1400px);
-  height: min(92svh, 860px);
+  width: min(92vw, 1312px, 140.8svh);
+  aspect-ratio: 8 / 5;
 }
 
 .invitation-flipbook,
@@ -169,8 +160,26 @@
 }
 
 @media (max-width: 640px) {
+  .mobile-page-hint {
+    display: flex;
+  }
+
   .invitation-book-container {
-    width: min(94vw, 640px);
-    height: min(90svh, 820px);
+    width: min(90vw, 620px, 69.6svh);
+    aspect-ratio: 4 / 5;
+  }
+
+  .invitation-flipbook.stf__parent {
+    touch-action: none;
+  }
+
+  .invitation-flipbook .stf__item {
+    will-change: transform;
+  }
+}
+
+@media (min-width: 641px) {
+  .mobile-page-hint {
+    display: none;
   }
 }

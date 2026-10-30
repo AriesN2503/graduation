@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 
 import InvitationPage from "@/components/invitation/components/invitation-page";
@@ -12,10 +13,22 @@ const HTMLFlipBook = dynamic(() => import("react-pageflip"), {
 });
 
 export default function InvitationBook() {
+    const currentPageRef = useRef(0);
     const [currentPage, setCurrentPage] = useState(0);
-    const [orientation, setOrientation] = useState<"portrait" | "landscape">(
-        "landscape",
-    );
+    const [orientation, setOrientation] = useState<"portrait" | "landscape">(() => {
+        if (typeof window === "undefined") {
+            return "landscape";
+        }
+
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const bookWidth =
+            viewportWidth <= 640
+                ? Math.min(viewportWidth * 0.9, 620, viewportHeight * 0.696)
+                : Math.min(viewportWidth * 0.92, 1312, viewportHeight * 1.408);
+
+        return bookWidth < 560 ? "portrait" : "landscape";
+    });
     const isSinglePageCover = currentPage === 0 || currentPage === 3;
     const coverOffset =
         orientation === "landscape" && isSinglePageCover
@@ -23,11 +36,17 @@ export default function InvitationBook() {
                 ? "-25%"
                 : "25%"
             : "0%";
+    const hintPosition =
+        orientation === "landscape" && currentPage === 0
+            ? "left-3/4"
+            : orientation === "landscape" && currentPage === 3
+              ? "left-1/4"
+              : "left-1/2";
 
     return (
         <motion.div
-            className="h-full w-full"
-            initial={{ x: "-25%" }}
+            className="relative h-full w-full"
+            initial={false}
             animate={{ x: coverOffset }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
@@ -56,7 +75,22 @@ export default function InvitationBook() {
                 className="invitation-flipbook relative z-10 drop-shadow-[0_24px_40px_rgba(54,37,24,0.22)]"
                 style={{ height: "100%", width: "100%" }}
                 startPage={0}
-                onFlip={(event) => setCurrentPage(Number(event.data))}
+                onFlip={(event) => {
+                    currentPageRef.current = Number(event.data);
+                }}
+                onInit={(event) => {
+                    currentPageRef.current = Number(event.data.page);
+                    setCurrentPage(Number(event.data.page));
+                    setOrientation(
+                        event.data.mode === "portrait"
+                            ? "portrait"
+                            : "landscape",
+                    );
+                }}
+                onChangeState={(event) =>
+                    event.data === "read" &&
+                    setCurrentPage(currentPageRef.current)
+                }
                 onChangeOrientation={(event) =>
                     setOrientation(
                         event.data === "portrait" ? "portrait" : "landscape",
@@ -96,6 +130,26 @@ export default function InvitationBook() {
                     <p>Sự hiện diện của bạn là niềm vui của chúng mình.</p>
                 </InvitationPage>
             </HTMLFlipBook>
+            {currentPage < 3 && (
+                <div
+                    aria-hidden="true"
+                    className={`mobile-page-hint absolute -bottom-8 ${hintPosition} flex -translate-x-1/2 items-center gap-1 text-poster-accent`}
+                >
+                    <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.18em]">
+                        Vuốt sang trái để xem tiếp
+                    </span>
+                    <motion.div
+                        animate={{ x: [-3, 5, -3] }}
+                        transition={{
+                            duration: 1.2,
+                            ease: "easeInOut",
+                            repeat: Infinity,
+                        }}
+                    >
+                        <ArrowRight className="size-6" strokeWidth={1.5} />
+                    </motion.div>
+                </div>
+            )}
         </motion.div>
     );
 }

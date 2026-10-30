@@ -12,7 +12,7 @@ export default function Invitation() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.55, ease: "easeOut" }}
-                className="absolute inset-0 bg-[#211b17]/25 backdrop-blur-[3px]"
+                className="absolute inset-0 bg-[#211b17]/80 backdrop-blur-[3px]"
             />
             <motion.div
                 initial={{ opacity: 0, y: "75vh", scale: 0.96 }}

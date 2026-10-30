@@ -19,6 +19,7 @@ const InvitationPage = forwardRef<HTMLDivElement, InvitationPageProps>(
                 className={`invitation-page relative flex h-full flex-col overflow-hidden border border-[#e7d9ca] p-8 text-center text-[#34302c] sm:p-12 ${
                     cover ? "invitation-page--cover" : ""
                 }`}
+                data-density={cover ? "hard" : undefined}
             >
                 <span
                     aria-hidden="true"
