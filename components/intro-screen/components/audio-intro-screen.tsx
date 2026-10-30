@@ -8,6 +8,7 @@ interface AudioIntroScreenProps {
     phrase?: IntroPhrase;
     phraseIndex: number;
     sparkRevealDelay: number;
+    isVideoFadingIn: boolean;
     shouldReduceMotion: boolean;
 }
 
@@ -15,6 +16,7 @@ export default function AudioIntroScreen({
     phrase,
     phraseIndex,
     sparkRevealDelay,
+    isVideoFadingIn,
     shouldReduceMotion,
 }: AudioIntroScreenProps) {
     return (
@@ -81,29 +83,27 @@ export default function AudioIntroScreen({
                             </>
                         )}
                         <div
-                            className={`w-full max-w-[min(92vw,72rem)] px-2 font-display leading-tight text-balance ${
-                                phraseIndex === INTRO_TIMELINE.phrases.length - 1
+                            className={`w-full max-w-[min(92vw,72rem)] px-2 font-display leading-tight text-balance ${phraseIndex === INTRO_TIMELINE.phrases.length - 1
                                     ? "text-[clamp(2rem,7vw,5.5rem)] font-medium tracking-[0.14em]"
                                     : "text-[clamp(1.5rem,5vw,4rem)] font-normal tracking-[0.12em]"
-                            }`}
+                                }`}
                         >
                             {phrase.type === "graduation" ? (
                                 <div className="intro-graduation relative mx-auto h-[min(58vw,24rem)] min-h-56 w-full max-w-208">
                                     {phrase.parts.map((part) => (
                                         <motion.span
                                             key={part.id}
-                                            className={`intro-graduation__word intro-graduation__word--${part.id} ${
-                                                part.id === "graduation"
-                                                    ? "absolute bottom-[34%] right-[10%] z-10 font-script text-[clamp(4.8rem,17vw,12rem)] leading-none normal-case text-poster-accent sm:bottom-[20%] sm:right-[-1%]"
+                                            className={`intro-graduation__word intro-graduation__word--${part.id} ${part.id === "graduation"
+                                                    ? "absolute bottom-[34%] right-[10%] z-10 font-script text-[clamp(4.8rem,17vw,12rem)] leading-none normal-case text-poster-accent sm:bottom-[20%]"
                                                     : "absolute left-[13%] top-[22%] z-10 font-display text-[clamp(2.5rem,7vw,4.5rem)] font-medium leading-none"
-                                            }`}
+                                                }`}
                                             initial={{
                                                 opacity: 0,
                                                 y: shouldReduceMotion
                                                     ? 0
                                                     : part.id === "happy"
-                                                      ? -14
-                                                      : 14,
+                                                        ? -14
+                                                        : 14,
                                                 filter: shouldReduceMotion ? "blur(0px)" : "blur(8px)",
                                             }}
                                             animate={{
@@ -116,8 +116,8 @@ export default function AudioIntroScreen({
                                                 delay: shouldReduceMotion
                                                     ? 0
                                                     : part.id === "happy"
-                                                      ? 0
-                                                      : phrase.wordRevealDelay,
+                                                        ? 0
+                                                        : phrase.wordRevealDelay,
                                                 ease: [0.22, 1, 0.36, 1],
                                             }}
                                         >
