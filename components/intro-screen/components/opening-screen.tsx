@@ -94,7 +94,7 @@ export default function OpeningScreen({
                                     per="word"
                                     preset="blur"
                                     delay={0.4}
-                                    className="font-script text-[clamp(4rem,10vw,9rem)] leading-[0.95]"
+                                    className="font-script text-[clamp(4rem,10vw,9rem)] leading-[0.95] max-[400px]:text-[clamp(3.25rem,14.5vw,3.75rem)]"
                                     style={{ color: "var(--poster-accent)" }}
                                 >
                                     Lễ Tốt Nghiệp

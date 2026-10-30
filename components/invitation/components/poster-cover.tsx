@@ -58,7 +58,7 @@ const PosterCover = forwardRef<HTMLDivElement, PosterCoverProps>(
                     <p className="absolute right-[7%] top-[38.2%] z-10 w-auto text-[1.55cqw] font-medium leading-normal tracking-[0.3em] text-[#555] [writing-mode:vertical-rl]">
                         THE CLASS OF 2022 — 2026
                     </p>
-                    <div className="absolute left-0 top-[72.5%] px-15 z-10 grid w-full grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)] items-center gap-[3cqw] text-[1.65cqw] font-bold leading-[1.55] tracking-[0.16em]">
+                    <div className="absolute left-0 top-[72.5%] z-10 grid w-full grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)] items-center gap-[3cqw] px-[5%] text-[1.65cqw] font-bold leading-[1.55] tracking-[0.16em]">
                         <div>
                             <p className="text-[1.8cqw] font-medium tracking-[0.28em] text-poster-accent">
                                 GRADUATION DAY
