@@ -2,11 +2,12 @@ import Image from "next/image";
 import { forwardRef } from "react";
 
 interface PosterCoverProps {
+    guestName: string;
     onImageSettled?: () => void;
 }
 
 const PosterCover = forwardRef<HTMLDivElement, PosterCoverProps>(
-    function PosterCover({ onImageSettled }, ref) {
+    function PosterCover({ guestName, onImageSettled }, ref) {
         return (
             <div
                 ref={ref}
@@ -79,7 +80,7 @@ const PosterCover = forwardRef<HTMLDivElement, PosterCoverProps>(
                         THÂN MỜI
                     </p>
                     <p className="poster-cover__guest absolute left-0 top-[83%] z-10 w-full font-script text-[12cqw] leading-none text-poster-accent">
-                        Bảo Trọng
+                        {guestName}
                     </p>
                     <p className="absolute left-0 top-[93%] z-10 w-full font-display text-[1.5cqw] font-semibold leading-normal tracking-[0.3em] text-poster-accent">
                         MỜI BẠN LẬT SANG TRANG TIẾP THEO

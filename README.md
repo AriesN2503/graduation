@@ -20,6 +20,12 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Guest Invitations
+
+Guest slugs and names are managed in `data/invitations.json`. Each listed slug is available as a direct URL, such as `/bao-nghi`. The invitation saves the resolved name in the current tab's session storage and cleans the address bar to `/`; refreshing in that tab keeps the same guest name. Unknown slugs return a 404, and visiting `/` without a saved guest displays “Bạn thân mến”.
+
+No Vercel rewrite is needed. Deploy the `graduation` Next.js project normally; its App Router dynamic route serves the configured guest URLs.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

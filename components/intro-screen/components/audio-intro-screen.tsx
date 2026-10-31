@@ -8,7 +8,6 @@ interface AudioIntroScreenProps {
     phrase?: IntroPhrase;
     phraseIndex: number;
     sparkRevealDelay: number;
-    isVideoFadingIn: boolean;
     shouldReduceMotion: boolean;
 }
 
@@ -16,7 +15,6 @@ export default function AudioIntroScreen({
     phrase,
     phraseIndex,
     sparkRevealDelay,
-    isVideoFadingIn,
     shouldReduceMotion,
 }: AudioIntroScreenProps) {
     return (

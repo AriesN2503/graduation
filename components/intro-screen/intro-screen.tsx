@@ -9,6 +9,7 @@ import OpeningScreen from "@/components/intro-screen/components/opening-screen";
 import { INTRO_TIMELINE } from "@/components/intro-screen/components/intro-timeline";
 
 interface IntroScreenProps {
+    guestName: string;
     onContinue?: () => void;
 }
 
@@ -18,6 +19,7 @@ const VIDEO_FADE_DURATION_SECONDS = 2;
 type ExperienceStage = "opening" | "starting" | "intro" | "transitioning" | "invitation";
 
 export default function IntroScreen({
+    guestName,
     onContinue,
 }: IntroScreenProps) {
     const [stage, setStage] = useState<ExperienceStage>("opening");
@@ -313,7 +315,7 @@ export default function IntroScreen({
             </p>
             <AnimatePresence mode="sync">
                 {stage === "invitation" ? (
-                    <Invitation key="graduation-invitation" />
+                    <Invitation key="graduation-invitation" guestName={guestName} />
                 ) : stage === "opening" ? (
                     <OpeningScreen
                         key="graduation-intro"
@@ -327,7 +329,6 @@ export default function IntroScreen({
                         phrase={stage === "intro" ? activePhrase : undefined}
                         phraseIndex={activePhraseIndex}
                         sparkRevealDelay={sparkRevealDelay}
-                        isVideoFadingIn={isVideoFadingIn}
                         shouldReduceMotion={shouldReduceMotion}
                     />
                 )}

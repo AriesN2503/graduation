@@ -5,7 +5,11 @@ import { motion, useAnimationControls } from "motion/react";
 
 import InvitationBook from "@/components/invitation/components/invitation-book";
 
-export default function Invitation() {
+interface InvitationProps {
+    guestName: string;
+}
+
+export default function Invitation({ guestName }: InvitationProps) {
     const [isBookReady, setIsBookReady] = useState(false);
     const bookAnimation = useAnimationControls();
 
@@ -43,7 +47,10 @@ export default function Invitation() {
                 animate={bookAnimation}
                 className="invitation-book-container relative z-10"
             >
-                <InvitationBook onReady={() => setIsBookReady(true)} />
+                <InvitationBook
+                    guestName={guestName}
+                    onReady={() => setIsBookReady(true)}
+                />
             </motion.div>
         </main>
     );

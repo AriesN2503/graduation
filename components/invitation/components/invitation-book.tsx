@@ -14,6 +14,7 @@ const HTMLFlipBook = dynamic(() => import("react-pageflip"), {
 });
 
 interface InvitationBookProps {
+    guestName: string;
     onReady: () => void;
 }
 
@@ -26,7 +27,10 @@ interface FlipBookHandle {
     pageFlip: () => FlipBookController | null;
 }
 
-export default function InvitationBook({ onReady }: InvitationBookProps) {
+export default function InvitationBook({
+    guestName,
+    onReady,
+}: InvitationBookProps) {
     const currentPageRef = useRef(0);
     const isReadyReportedRef = useRef(false);
     const flipBookRef = useRef<FlipBookHandle | null>(null);
@@ -225,7 +229,10 @@ export default function InvitationBook({ onReady }: InvitationBookProps) {
                     )
                 }
             >
-                <PosterCover onImageSettled={() => setIsPosterLoaded(true)} />
+                <PosterCover
+                    guestName={guestName}
+                    onImageSettled={() => setIsPosterLoaded(true)}
+                />
                 <InvitationPage
                     eyebrow="Thân mời bạn"
                     title="Cùng chung vui"

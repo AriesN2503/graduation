@@ -28,7 +28,7 @@ const InvitationPage = forwardRef<HTMLDivElement, InvitationPageProps>(
                 <div
                     className={
                         cover
-                            ? "absolute inset-x-5 top-1/2 flex max-h-[calc(100%_-_7rem)] -translate-y-1/2 flex-col items-center overflow-y-auto sm:inset-x-7 sm:max-h-[calc(100%_-_8rem)] lg:inset-x-9 lg:max-h-[calc(100%_-_9rem)]"
+                            ? "absolute inset-x-5 top-1/2 flex max-h-[calc(100%-7rem)] -translate-y-1/2 flex-col items-center overflow-y-auto sm:inset-x-7 sm:max-h-[calc(100%-8rem)] lg:inset-x-9 lg:max-h-[calc(100%-9rem)]"
                             : "relative flex min-h-0 flex-1 flex-col items-center pb-10 sm:pb-12 lg:pb-14 2xl:justify-evenly"
                     }
                 >
