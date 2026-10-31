@@ -1,11 +1,5 @@
-"use client";
+import InvitationExperience from "@/app/invitation-experience";
 
-import IntroScreen from "@/components/intro-screen/intro-screen";
-
-export default function BackgroundVideo() {
-  return (
-    <div className="fixed inset-0 isolate overflow-hidden bg-[#211b17]">
-      <IntroScreen />
-    </div>
-  );
+export default function Home() {
+  return <InvitationExperience />;
 }
