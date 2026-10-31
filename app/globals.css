@@ -145,8 +145,13 @@
 }
 
 .invitation-book-container {
-  width: min(92vw, 1312px, 140.8svh);
+  width: min(92vw, 1312px, 140.8vh);
   aspect-ratio: 8 / 5;
+}
+
+.opening-screen-layout {
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .invitation-flipbook,
@@ -165,7 +170,7 @@
   }
 
   .invitation-book-container {
-    width: min(90vw, 620px, 69.6svh);
+    width: min(90vw, 620px, 69.6vh);
     aspect-ratio: 4 / 5;
   }
 
@@ -175,6 +180,84 @@
 
   .invitation-flipbook .stf__item {
     will-change: transform;
+  }
+}
+
+@supports (height: 100svh) {
+  .invitation-book-container {
+    width: min(92vw, 1312px, 140.8svh);
+  }
+
+  .opening-screen-layout {
+    min-height: 100svh;
+  }
+
+  @media (max-width: 640px) {
+    .invitation-book-container {
+      width: min(90vw, 620px, 69.6svh);
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .intro-graduation {
+    height: 14rem;
+  }
+
+  .intro-graduation__word--happy {
+    right: 0;
+    left: 0;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    letter-spacing: 0.04em;
+  }
+
+  .intro-graduation__word--graduation {
+    top: 48%;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    font-size: clamp(3rem, 15vw, 3.75rem);
+    letter-spacing: normal;
+  }
+
+  .intro-graduation__spark {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .poster-cover__details {
+    top: 66%;
+    gap: 2cqw;
+    padding-right: 4%;
+    padding-left: 4%;
+    font-size: clamp(5px, 1.5cqw, 7px);
+    line-height: 1.35;
+    letter-spacing: 0.08em;
+  }
+
+  .poster-cover__details > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .poster-cover__detail-heading {
+    font-size: clamp(5.2px, 1.55cqw, 7.5px);
+    letter-spacing: 0.1em;
+  }
+
+  .poster-cover__invite {
+    top: 78%;
+  }
+
+  .poster-cover__guest {
+    top: 82%;
   }
 }
 

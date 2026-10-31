@@ -35,7 +35,7 @@ export default function OpeningScreen({
             <div className="pointer-events-none absolute inset-3 border border-[#d9c9b8] sm:inset-5" />
             <div className="pointer-events-none absolute inset-4.5 border border-[#eadfd3] sm:inset-6.5" />
 
-            <div className="relative flex min-h-svh flex-col items-center justify-between px-8 py-12 sm:px-16 sm:py-14">
+            <div className="opening-screen-layout relative flex flex-col items-center justify-between px-8 py-12 sm:px-16 sm:py-14">
                 <motion.header
                     initial={{ y: -12 }}
                     animate={{ y: 0 }}
