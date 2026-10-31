@@ -89,13 +89,13 @@ export default function AudioIntroScreen({
                                 }`}
                         >
                             {phrase.type === "graduation" ? (
-                                <div className="intro-graduation relative mx-auto h-[min(58vw,24rem)] min-h-56 w-full max-w-208 max-[400px]:h-56">
+                                <div className="intro-graduation relative mx-auto h-[min(58vw,24rem)] min-h-56 w-full max-w-208">
                                     {phrase.parts.map((part) => (
                                         <motion.span
                                             key={part.id}
                                             className={`intro-graduation__word intro-graduation__word--${part.id} ${part.id === "graduation"
-                                                    ? "absolute bottom-[34%] right-[10%] z-10 font-script text-[clamp(4.8rem,17vw,12rem)] leading-none normal-case text-poster-accent sm:bottom-[20%] max-[400px]:bottom-auto max-[400px]:left-1/2 max-[400px]:right-auto max-[400px]:top-[48%] max-[400px]:-translate-x-1/2 max-[400px]:whitespace-nowrap max-[400px]:text-[clamp(3rem,15vw,3.75rem)] max-[400px]:tracking-normal"
-                                                    : "absolute left-[13%] top-[22%] z-10 font-display text-[clamp(2.5rem,7vw,4.5rem)] font-medium leading-none max-[400px]:left-1/2 max-[400px]:top-[20%] max-[400px]:-translate-x-1/2 max-[400px]:whitespace-nowrap max-[400px]:text-[clamp(1.75rem,8vw,2.25rem)] max-[400px]:tracking-[0.04em]"
+                                                    ? "absolute bottom-[34%] right-[10%] z-10 font-script text-[clamp(4.8rem,17vw,12rem)] leading-none normal-case text-poster-accent sm:bottom-[20%]"
+                                                    : "absolute left-[13%] top-[22%] z-10 font-display text-[clamp(2.5rem,7vw,4.5rem)] font-medium leading-none"
                                                 }`}
                                             initial={{
                                                 opacity: 0,
@@ -126,7 +126,7 @@ export default function AudioIntroScreen({
                                     ))}
                                     <motion.span
                                         aria-hidden="true"
-                                        className="pointer-events-none absolute right-[8%] top-[4%] z-0 size-[clamp(4rem,11vw,7.5rem)] bg-center max-[400px]:size-12"
+                                        className="intro-graduation__spark pointer-events-none absolute right-[8%] top-[4%] z-0 size-[clamp(4rem,11vw,7.5rem)] bg-center"
                                         style={{
                                             backgroundImage: "url('/images/spark-1.svg')",
                                             backgroundSize: "900% auto",
@@ -144,7 +144,7 @@ export default function AudioIntroScreen({
                                     />
                                     <motion.span
                                         aria-hidden="true"
-                                        className="pointer-events-none absolute bottom-[2%] left-[5%] z-0 size-[clamp(4rem,11vw,7.5rem)] bg-center max-[400px]:size-12"
+                                        className="intro-graduation__spark pointer-events-none absolute bottom-[2%] left-[5%] z-0 size-[clamp(4rem,11vw,7.5rem)] bg-center"
                                         style={{
                                             backgroundImage: "url('/images/spark-2.svg')",
                                             backgroundSize: "900% auto",
